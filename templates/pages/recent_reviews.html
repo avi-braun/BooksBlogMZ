@@ -1,0 +1,34 @@
+{% extends "pages/richtextpage.html" %}
+
+{% block main %}
+
+
+
+<!--retrieve recent posts:-->
+
+
+{% load blog_tags keyword_tags i18n %}
+{% blog_recent_posts 5 as recent_posts %}
+{% if recent_posts %}
+<h4>{% trans "Here you can find some of my recent book reviews:" %}</h4>
+
+<ul class="unstyled recent-posts">
+{% for recent_post in recent_posts %}
+<li><a href="{{ recent_post.get_absolute_url }}" >{{ recent_post.title }}</a>
+    By: {{ recent_post.user.first_name }} {{ recent_post.user.last_name }}.
+    Published on: {{ recent_post.publish_date }}
+
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
+<!--
+This template is provided as a custom template for the homepage, for
+when it is configured as an editable page in the navigation tree. Feel
+free to modify it.
+-->
+{{ block.super }}
+{% endblock %}

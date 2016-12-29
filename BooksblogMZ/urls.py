@@ -4,14 +4,18 @@ from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.views.i18n import set_language
-
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
+import mezzanine.pages.views
+
+
 
 
 admin.autodiscover()
 
 # Add the urlpatterns for any custom Django applications here.
+
+
 # You can also change the ``home`` view to add your own functionality
 # to the project's homepage.
 
@@ -19,6 +23,9 @@ urlpatterns = i18n_patterns(
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     url("^admin/", include(admin.site.urls)),
+    url(r'^reviews/', include('Bookreview.urls')),
+    # url(r'^$', include('Bookreview.urls')),
+
 )
 
 if settings.USE_MODELTRANSLATION:
@@ -37,8 +44,8 @@ urlpatterns += [
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
-    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
-
+    # url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    #
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------
     # This pattern gives us a normal ``Page`` object, so that your
@@ -53,7 +60,7 @@ urlpatterns += [
     # should be used if you want to customize the homepage's template.
     # NOTE: Don't forget to import the view function too!
 
-    # url("^$", mezzanine.pages.views.page, {"slug": "/"}, name="home"),
+    url("^$", mezzanine.pages.views.page, {"slug": "/"}, name="home"),
 
     # HOMEPAGE FOR A BLOG-ONLY SITE
     # -----------------------------
